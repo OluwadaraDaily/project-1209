@@ -22,6 +22,11 @@ export class TStore extends LitElement {
     this.products = [];
   }
 
+  async connectedCallback() {
+    super.connectedCallback();
+    await this.fetchProducts();
+  }
+
   render() {
     return html`
       <div>
@@ -106,7 +111,7 @@ export class TStore extends LitElement {
 
   fetchProducts = async () => {
     try {
-      const response = this.storeAPI.fetchProducts(10);
+      const response = await this.storeAPI.fetchProducts(10);
       console.log('RESPONSE =>', response);
       this.products = response;
     } catch (error) {

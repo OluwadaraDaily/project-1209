@@ -37,6 +37,24 @@ export class Http {
     });
     return this.handleResponse(response)
   }
+
+  static async handleResponse(response) {
+    const parsedResponse = await this.determineResponse(response);
+    if (!response.ok) {
+      throw new HttpResponseError(response.statusText, parsedResponse);
+    }
+
+    return parsedResponse;
+  }
+
+  static async determineResponse(response) {
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return await response.json();
+    } else {
+      return await response.text();
+    }
+  }
 }
 
 export class HttpResponseError {

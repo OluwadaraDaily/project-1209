@@ -9,7 +9,7 @@ export class StoreAPI {
     try {
       let baseURI = `${this.baseUrl}/products`
       const URI = limit ? `${baseURI}?limit=${limit}` : `${this.baseURI}`;
-      const response = Http.get(URI);
+      const response = await Http.get(URI);
       return response;
     } catch (error) {
       throw error;
