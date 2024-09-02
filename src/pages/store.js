@@ -2,12 +2,14 @@ import { LitElement, css, html } from 'lit'
 import { StoreAPI } from '../services/store';
 import { TWStyles } from '../css/tw';
 import { TProduct } from '../components/product';
+import { TCart } from '../components/cart';
 
 export class TStore extends LitElement {
   static get properties() {
     return {
       products: {},
       cart: { state: true },
+      showCart: { state: true }
     }
   }
 
@@ -16,6 +18,7 @@ export class TStore extends LitElement {
     this.storeAPI = new StoreAPI();
     this.products = [];
     this.cart = {};
+    this.showCart = false;
   }
 
   async connectedCallback() {
@@ -50,11 +53,17 @@ export class TStore extends LitElement {
             <div class="basis-[90%]">
               <h1 class="font-semibold text-center text-2xl">ALL PRODUCTS</h1>
             </div>
-            <div class="basis-[10%]">
+            <div class="basis-[10%] flex items-end gap-4">
               <button 
                 class="border border-black rounded-md px-4 py-1 hover:scale-[1.1] transition duration-150 ease-out hover:ease-in"
+                @click="${() => this.showCart = true}"
               >
                 Cart
+              </button>
+              <button 
+                class="underline"
+              >
+                Checkout
               </button>
             </div>
           </div>
@@ -69,6 +78,13 @@ export class TStore extends LitElement {
             `)}
           </div>
         </div>
+        ${this.showCart ? html`
+          <t-cart
+            .cart="${this.cart}"
+            .products="${this.products}"
+            @close-cart="${() => this.showCart = false}"
+          ></t-cart>
+        ` : ``}
       </div>
     `
   }
