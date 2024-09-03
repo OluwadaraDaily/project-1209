@@ -3,6 +3,7 @@ import { StoreAPI } from '../services/store';
 import { TWStyles } from '../css/tw';
 import { TProduct } from '../components/product';
 import { TCart } from '../components/cart';
+import { CartUtil } from '../utils/cart';
 
 export class TStore extends LitElement {
   static get properties() {
@@ -17,16 +18,31 @@ export class TStore extends LitElement {
     super();
     this.storeAPI = new StoreAPI();
     this.products = [];
-    this.cart = {};
     this.showCart = false;
   }
 
   async connectedCallback() {
     super.connectedCallback();
     await this.fetchProducts();
+    this.getCart();
   }
 
-  updateCart(event) {
+  willUpdate(changedProperties) {
+    if (changedProperties.has('cart')) {
+      CartUtil.saveCart(this.cart)
+    }
+  }
+
+  getCart = () => {
+    let cart = CartUtil.getCart();
+    if (!cart) {
+      CartUtil.saveCart();
+    }
+    cart = CartUtil.getCart();
+    this.cart = cart;
+  }
+
+  updateCart = (event) => {
     const productId = event.detail.id;
 
     if (event.type === 'add-to-cart') {

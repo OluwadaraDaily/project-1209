@@ -121,7 +121,6 @@ export class TCart extends LitElement {
     }
     this.totalAmount = computedArr.reduce((acc, curr) => acc + curr.amount, 0)
     this.cartItems = computedArr;
-    console.log('cart Items =>', this.cartItems);
   }
 }
 
