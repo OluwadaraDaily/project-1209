@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { TWStyles } from "../css/tw";
+import { GeneralUtil } from "../utils";
 
 export class TCart extends LitElement {
   static get properties() {
@@ -89,6 +90,7 @@ export class TCart extends LitElement {
               ${this.cartItems.length > 0 ? html`
                 <button 
                   class="p-2 border-2 border-black w-[200px]"
+                  @click="${this.openCheckout}"
                 >
                   Checkout
                 </button>
@@ -106,21 +108,14 @@ export class TCart extends LitElement {
   }
 
   computeCartItems = () => {
-    const _cart = this.cart;
-    const computedArr = []
-    for (const key in _cart) {
-      if (!_cart[key]) continue
-      
-      const value = _cart[key];
-      const product = this.products.filter((product) => product.id == key)[0];
-      computedArr.push({
-        ...product,
-        quantity: value,
-        amount: parseInt(value) * product.price
-      })
-    }
-    this.totalAmount = computedArr.reduce((acc, curr) => acc + curr.amount, 0)
-    this.cartItems = computedArr;
+    const { totalAmount, cartItems } = GeneralUtil.computeCartItems(this.cart, this.products);
+    this.totalAmount = totalAmount
+    this.cartItems = cartItems;
+  }
+
+  openCheckout = () => {
+    const event = new CustomEvent('open-checkout');
+    this.dispatchEvent(event);
   }
 }
 
