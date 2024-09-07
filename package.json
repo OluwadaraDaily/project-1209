@@ -13,7 +13,8 @@
     "autoprefixer": "^10.4.20",
     "crypto-js": "^4.2.0",
     "lit": "^3.2.0",
-    "postcss": "^8.4.41"
+    "postcss": "^8.4.41",
+    "qrcode": "^1.5.4"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
