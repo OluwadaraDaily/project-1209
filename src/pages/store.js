@@ -14,6 +14,7 @@ export class TStore extends LitElement {
       cart: { state: true },
       showCart: { state: true },
       showCheckout: { state: true },
+      isCartEmpty: { state: true },
     }
   }
 
@@ -35,6 +36,7 @@ export class TStore extends LitElement {
   willUpdate(changedProperties) {
     if (changedProperties.has('cart')) {
       CartUtil.saveCart(this.cart)
+      this.computeCartStatus();
     }
   }
 
@@ -66,6 +68,16 @@ export class TStore extends LitElement {
     }
   }
 
+  clearCart = () => {
+    this.cart = {}
+  }
+
+  computeCartStatus = () => {
+    console.log('Here =>', this.cart);
+    this.isCartEmpty = Object.keys(this.cart).length === 0 || 
+                      Object.values(this.cart).every(item => item === 0);
+  }
+
   openCart = () => {
     this.showCheckout = false;
     this.showCart = true;
@@ -92,7 +104,8 @@ export class TStore extends LitElement {
                 Cart
               </button>
               <button 
-                class="underline"
+                class="underline disabled:opacity-50 disabled:cursor-not-allowed"
+                .disabled="${this.isCartEmpty}"
                 @click="${this.openCheckout}"
               >
                 Checkout
@@ -122,7 +135,7 @@ export class TStore extends LitElement {
           <t-checkout
             .cart="${this.cart}"
             .products="${this.products}"
-            @close-checkout="${() => this.showCheckout = false}"
+            @close-checkout="${this.closeCheckout}"
           ></t-checkout>
         ` : ``}
       </div>
@@ -139,6 +152,14 @@ export class TStore extends LitElement {
       this.products = response;
     } catch (error) {
       console.error('ERROR =>', error);
+    }
+  }
+
+  closeCheckout = (event) => {
+    const isPaid = event.detail.is_paid
+    this.showCheckout = false;
+    if (isPaid) {
+      this.clearCart();
     }
   }
 }

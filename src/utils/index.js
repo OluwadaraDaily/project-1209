@@ -21,6 +21,29 @@ const computeCartItems = (cart, products) => {
   }
 }
 
+const satsToBtc = (sats) => {
+  return sats / 1.0E8
+}
+
+const timestampToHumanReadable = (timestamp, commaSeperator = true) => {
+  const date = new Date(timestamp * 1000); // convert to milliseconds
+    let dateString = new Intl.DateTimeFormat('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
+
+    if (!commaSeperator) {
+      dateString = dateString.replace(',', '');
+    }
+
+    return dateString;
+  }
+
 export const GeneralUtil = {
   computeCartItems,
+  satsToBtc,
+  timestampToHumanReadable,
 }
