@@ -4,13 +4,17 @@ import { TWStyles } from '../css/tw';
 import { TProduct } from '../components/product';
 import { TCart } from '../components/cart';
 import { CartUtil } from '../utils/cart';
+import { TCheckout } from '../components/checkout';
+import { PRODUCTS } from '../constants/product';
 
 export class TStore extends LitElement {
   static get properties() {
     return {
       products: {},
       cart: { state: true },
-      showCart: { state: true }
+      showCart: { state: true },
+      showCheckout: { state: true },
+      isCartEmpty: { state: true },
     }
   }
 
@@ -19,17 +23,20 @@ export class TStore extends LitElement {
     this.storeAPI = new StoreAPI();
     this.products = [];
     this.showCart = false;
+    this.showCheckout = false;
   }
 
   async connectedCallback() {
     super.connectedCallback();
-    await this.fetchProducts();
+    // await this.fetchProducts();
+    this.products = PRODUCTS;
     this.getCart();
   }
 
   willUpdate(changedProperties) {
     if (changedProperties.has('cart')) {
       CartUtil.saveCart(this.cart)
+      this.computeCartStatus();
     }
   }
 
@@ -61,6 +68,26 @@ export class TStore extends LitElement {
     }
   }
 
+  clearCart = () => {
+    this.cart = {}
+  }
+
+  computeCartStatus = () => {
+    console.log('Here =>', this.cart);
+    this.isCartEmpty = Object.keys(this.cart).length === 0 || 
+                      Object.values(this.cart).every(item => item === 0);
+  }
+
+  openCart = () => {
+    this.showCheckout = false;
+    this.showCart = true;
+  }
+
+  openCheckout = () => {
+    this.showCart = false;
+    this.showCheckout = true;
+  }
+
   render() {
     return html`
       <div class="relative min-h-[100vh] w-full max-w-[1200px] md:w-[80%] mx-auto my-8">
@@ -72,12 +99,14 @@ export class TStore extends LitElement {
             <div class="basis-[10%] flex items-end gap-4">
               <button 
                 class="border border-black rounded-md px-4 py-1 hover:scale-[1.1] transition duration-150 ease-out hover:ease-in"
-                @click="${() => this.showCart = true}"
+                @click="${this.openCart}"
               >
                 Cart
               </button>
               <button 
-                class="underline"
+                class="underline disabled:opacity-50 disabled:cursor-not-allowed"
+                .disabled="${this.isCartEmpty}"
+                @click="${this.openCheckout}"
               >
                 Checkout
               </button>
@@ -99,7 +128,15 @@ export class TStore extends LitElement {
             .cart="${this.cart}"
             .products="${this.products}"
             @close-cart="${() => this.showCart = false}"
+            @open-checkout="${this.openCheckout}"
           ></t-cart>
+        ` : ``}
+        ${this.showCheckout ? html`
+          <t-checkout
+            .cart="${this.cart}"
+            .products="${this.products}"
+            @close-checkout="${this.closeCheckout}"
+          ></t-checkout>
         ` : ``}
       </div>
     `
@@ -115,6 +152,14 @@ export class TStore extends LitElement {
       this.products = response;
     } catch (error) {
       console.error('ERROR =>', error);
+    }
+  }
+
+  closeCheckout = (event) => {
+    const isPaid = event.detail.is_paid
+    this.showCheckout = false;
+    if (isPaid) {
+      this.clearCart();
     }
   }
 }

@@ -15,6 +15,7 @@ export class Http {
   static async get(url, options = {}) {
     const defaultHeaders = {
       'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin" : '*',
     };
     const headers = {...defaultHeaders, ...(options.headers || {})};
     const response = await fetch(url, {
