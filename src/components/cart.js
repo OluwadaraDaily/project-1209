@@ -33,10 +33,10 @@ export class TCart extends LitElement {
 
   render() {
     return html`
-      <div class="absolute top-[10%] left-[50%] translate-y-[-10%] translate-x-[-50%]">
-        <div class="w-[600px] max-h-[400px] overflow-y-auto shadow-xl z-10 p-8 bg-white border border-black">
+      <div class="absolute md:top-[10%] top-[1%] left-[50%] md:translate-y-[-10%] translate-y-[-1%] translate-x-[-50%] w-[90%] mx-auto md:mx-0 md:w-auto shadow-lg">
+        <div class="md:w-[600px] md:max-h-[400px] w-full max-h-[500px] overflow-y-auto shadow-xl z-10 md:p-8 p-2.5 bg-white border border-black">
           <div class="flex justify-between mb-5">
-            <h2 class="text-3xl">Cart</h2>
+            <h2 class="md:text-3xl text-xl font-medium">Cart</h2>
             <button class="underline" @click="${this.closeCart}">Close</button>
           </div>
           ${this.cartItems.length === 0 ? html`

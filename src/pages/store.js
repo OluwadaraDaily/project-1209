@@ -91,8 +91,8 @@ export class TStore extends LitElement {
     return html`
       <div class="relative min-h-[100vh] w-full max-w-[1200px] md:w-[80%] mx-auto my-8">
         <div>
-          <div class="flex items-center gap-8 justify-center mb-8">
-            <div class="basis-[90%]">
+          <div class="flex md:flex-row flex-col items-center gap-8 justify-center mb-8">
+            <div class="md:basis-[90%]">
               <h1 class="font-semibold text-center text-2xl">ALL PRODUCTS</h1>
             </div>
             <div class="basis-[10%] flex items-end gap-4">
