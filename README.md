@@ -8,6 +8,10 @@ It is a simple [Lit](https://lit.dev) e-commmerce project that has a crypto chec
 2. Run `npm install` to install all dependencies listed in `package.json`
 3. Setup environment variables using the `env.example` as a template to create your own `.env`
 4. Explanation of the environment variables is in the sample file.
+5. Run project with `npm run dev`
+6. Build Tailwind CSS using `npm run watch:css`
+
+And...you are good to go.
 
 [Link to Blockonomics Adapter](https://github.com/OluwadaraDaily/blockonomics-adapter)
 
