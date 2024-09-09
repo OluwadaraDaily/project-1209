@@ -157,11 +157,11 @@ export class TCheckout extends LitElement {
     const minutes = Math.floor(this.clock / 60);
     const seconds = this.clock % 60;
     return html`
-      <div class="absolute top-[10%] left-[50%] translate-y-[-10%] translate-x-[-50%]">
-        <div class="w-[600px] max-h-[400px] overflow-y-auto shadow-xl z-10 p-8 bg-white border border-black">
+      <div class="absolute md:top-[10%] top-[1%] left-[50%] md:translate-y-[-10%] translate-y-[-1%] translate-x-[-50%] w-[90%] mx-auto md:mx-0 md:w-auto shadow-lg">
+        <div class="md:w-[600px] md:max-h-[400px] w-full max-h-[500px] overflow-y-auto shadow-xl z-10 md:p-8 p-2.5 bg-white border border-black">
           <div class="flex justify-between mb-5">
             ${this.status === 0 ? html`
-              <h2 class="text-3xl">Checkout Page</h2>
+              <h2 class="md:text-3xl text-xl font-medium">Checkout Page</h2>
             ` : html`<div></div>`}
             <button class="underline" @click="${this.closeCheckout}">Close</button>
           </div>
@@ -171,8 +171,8 @@ export class TCheckout extends LitElement {
             ${this.paymentConfirmed(this.paymentInfo)}
           ` : html`
             <div>
-              <div class="flex items-stretch gap-2">
-                <div id="btc-div"></div>
+              <div class="flex md:flex-row flex-col items-stretch gap-2">
+                <div id="btc-div" class="flex justify-center"></div>
                 <div class="w-full">
                   <div class="p-4 bg-gray-100 mb-6">
                     <p class="text-base mb-1">Amount to pay in USD</p>
@@ -208,7 +208,7 @@ export class TCheckout extends LitElement {
               <div class="p-4 bg-gray-100 mb-6">
                 <p class="text-base mb-1">Pay to the address</p>
                 <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-5">
+                  <div class="flex items-center gap-5 overflow-auto">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
                       stroke-width="1.5"    stroke="currentColor" class="size-8"
