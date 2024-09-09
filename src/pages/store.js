@@ -37,10 +37,6 @@ export class TStore extends LitElement {
       CartUtil.saveCart(this.cart)
       this.computeCartStatus();
     }
-
-    if (changedProperties.has('showCart') || changedProperties.has('showCheckout')) {
-      this.toggleScrollLock();
-    }
   }
 
   getCart = () => {
@@ -81,8 +77,6 @@ export class TStore extends LitElement {
   }
 
   openCart = () => {
-    console.log('DOCUMENT =>', document)
-    console.log('HTML =>', document.html)
     this.showCheckout = false;
     this.showCart = true;
     document.body.style.overflow = 'hidden';
@@ -94,17 +88,6 @@ export class TStore extends LitElement {
     this.showCheckout = true;
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
-  }
-
-  toggleScrollLock = () => {
-    const body = document.querySelector('body');
-    console.log('BODY =>', body)
-    if (this.showCart || this.showCheckout) {
-      console.log('Prevent scrolling....')
-      body.style.overflow = 'hidden'; // Prevent scrolling
-    } else {
-      body.style.overflow = ''; // Restore scrolling
-    }
   }
 
   render() {

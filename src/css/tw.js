@@ -794,6 +794,10 @@ video {
   flex-basis: 50%;
 }
 
+.basis-\\[90\\%\\] {
+  flex-basis: 90%;
+}
+
 .border-collapse {
   border-collapse: collapse;
 }
