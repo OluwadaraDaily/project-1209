@@ -9,3 +9,6 @@ It is a simple [Lit](https://lit.dev) e-commmerce project that has a crypto chec
 3. Setup environment variables using the `env.example` as a template to create your own `.env`
 4. Explanation of the environment variables is in the sample file.
 
+[Link to Blockonomics Adapter](https://github.com/OluwadaraDaily/blockonomics-adapter)
+
+NOTE: You would need the Blockonomics Adapter to run, the server URL is one of the environment variables needed.
