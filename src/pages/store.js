@@ -28,8 +28,7 @@ export class TStore extends LitElement {
 
   async connectedCallback() {
     super.connectedCallback();
-    // await this.fetchProducts();
-    this.products = PRODUCTS;
+    await this.fetchProducts();
     this.getCart();
   }
 
@@ -177,6 +176,7 @@ export class TStore extends LitElement {
       this.products = response;
     } catch (error) {
       console.error('ERROR =>', error);
+      this.products = PRODUCTS;
     }
   }
 
