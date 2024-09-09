@@ -73,7 +73,6 @@ export class TStore extends LitElement {
   }
 
   computeCartStatus = () => {
-    console.log('Here =>', this.cart);
     this.isCartEmpty = Object.keys(this.cart).length === 0 || 
                       Object.values(this.cart).every(item => item === 0);
   }
