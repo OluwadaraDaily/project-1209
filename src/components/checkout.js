@@ -41,7 +41,7 @@ export class TCheckout extends LitElement {
       timestamp: 0,
       txid: "",
     };
-    this.blockonomicsAPIBaseUrl = import.meta.env.VITE_BLOCKONOMICS_MAIN_URL;
+    this.blockonomicsWebsiteBaseUrl = import.meta.env.VITE_BLOCKONOMICS_MAIN_URL;
     this.isPaid = false;
     this.socket = undefined;
   }
@@ -140,7 +140,7 @@ export class TCheckout extends LitElement {
               <div class="basis-[50%] text-right">
                 <a
                   class="underline"
-                  href="${this.blockonomicsAPIBaseUrl}/#/search?q=${paymentInfo.txid}" 
+                  href="${this.blockonomicsWebsiteBaseUrl}/#/search?q=${paymentInfo.txid}" 
                   target="_blank"
                 >
                   ${paymentInfo.txid.substring(0,15)}
